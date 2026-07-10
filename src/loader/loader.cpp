@@ -7,6 +7,7 @@
 #include "protocol/protocol.hpp"
 #include "loader/board.hpp"
 #include "loader/cpu.hpp"
+#include "loader/ram.hpp"
 
 namespace
 {
@@ -81,6 +82,58 @@ void loader::boot()
     console::printf(
         "Overall ....... %s",
         cpu_test.overall_pass ? "PASS" : "FAIL");
+
+    console::newline();
+
+    const loader::ram::RamInfo ram =
+        loader::ram::discover();
+
+    console::println("RAM");
+    console::println("---");
+
+    console::printf(
+        "Total Heap   : %u B",
+        ram.total_heap);
+
+    console::printf(
+        "Free Heap    : %u B",
+        ram.free_heap);
+
+    console::printf(
+        "Minimum Free : %u B",
+        ram.minimum_free_heap);
+
+    console::printf(
+        "Largest Block: %u B",
+        ram.largest_block);
+
+    console::newline();
+
+    console::println("RAM Test");
+    console::println("--------");
+
+    console::print("Testing RAM");
+
+    loader::ram::RamTestResult ram_test =
+        loader::ram::test(ram);
+
+    console::println(" PASS");
+
+    console::printf(
+        "Allocation : %s",
+        ram_test.allocation_pass ? "PASS" : "FAIL");
+
+    console::printf(
+        "Write      : %s",
+        ram_test.write_pass ? "PASS" : "FAIL");
+
+    console::printf(
+        "Read       : %s",
+        ram_test.read_pass ? "PASS" : "FAIL");
+
+    console::printf(
+        "Overall    : %s",
+        ram_test.overall_pass ? "PASS" : "FAIL");
 
     console::newline();
 }
