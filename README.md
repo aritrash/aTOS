@@ -25,7 +25,7 @@ aTerm is the official desktop terminal for aTOS.
 ## Roadmap
 
 - [x] Project initialization
-- [ ] aTLoader
+- [x] aTLoader
 - [ ] Kernel initialization
 - [ ] Interactive shell
 - [ ] Driver framework
