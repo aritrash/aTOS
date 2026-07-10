@@ -1,5 +1,7 @@
 #include "console/console.hpp"
 #include <cstdio>
+#include <cstdarg>
+#include <cstdio>
 #include "protocol/protocol.hpp"
 
 namespace
@@ -39,4 +41,25 @@ void console::println(const char* text)
 void console::newline()
 {
     print("");
+}
+
+void console::printf(
+    const char* format,
+    ...)
+{
+    char buffer[256];
+
+    va_list args;
+
+    va_start(args, format);
+
+    vsnprintf(
+        buffer,
+        sizeof(buffer),
+        format,
+        args);
+
+    va_end(args);
+
+    print(buffer);
 }
